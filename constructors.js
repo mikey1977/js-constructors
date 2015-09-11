@@ -90,9 +90,7 @@ function Spellcaster(name, health, mana) {
   this.mana = mana;
   this.isAlive = true;
 }
-Spellcaster.prototype.inflictDamage(damage){
 
-}
 
   /**
    * @method inflictDamage
@@ -105,6 +103,19 @@ Spellcaster.prototype.inflictDamage(damage){
    * @param  {number} damage  Amount of damage to deal to the spellcaster
    */
 
+Spellcaster.prototype.inflictDamage = function(damage) {
+ //damage is not this, external being passed to Spellcaster
+  if (this.health > 0) {
+  this.health -= damage;
+    if (this.health <= 0) {
+      this.health = 0;
+      this.isAlive = false;
+    }
+  } else if (this.health <= 0) {
+    this.health = 0;
+    this.isAlive = false;
+  }
+}
   /**
    * @method spendMana
    *
@@ -115,6 +126,23 @@ Spellcaster.prototype.inflictDamage(damage){
    * @return {boolean} success  Whether mana was successfully spent.
    */
 
+Spellcaster.prototype.spendMana = function(cost) {
+  // console.log(this.mana);
+  // console.log("this is the cost", cost);
+  if (this.mana >= cost ) {
+    this.mana -= cost;
+    return true;
+
+
+    // console.log("Another string", cost);
+    // console.log("here is a string", this.mana);
+  } else if (this.mana <= cost){
+    // this.mana -= cost;
+    return false;
+  } else  {
+    this.mana = false;
+  }
+}
   /**
    * @method invoke
    *
@@ -141,3 +169,149 @@ Spellcaster.prototype.inflictDamage(damage){
    * @param  {Spellcaster} target         The spell target to be inflicted.
    * @return {boolean}                    Whether the spell was successfully cast.
    */
+
+//instanceof returns a boolean
+
+Spellcaster.prototype.invoke = function(spell, target) {
+//   if (spell === undefined || spell === null) {
+//     return false;
+//   }
+//   if (spell instanceof Spell && target instanceof Spellcaster) {
+//     if (this.spendMana(spell.cost)) {
+//       target.inflictDamage(spell.damage);
+//       return true;
+//     }
+//   }
+
+// }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// WORKING VERSION
+  if (spell === undefined || spell === null) {
+    return false;
+  }
+  if (spell instanceof Spell && target instanceof Spellcaster) {
+    if (this.spendMana(spell.cost)) {
+      target.inflictDamage(spell.damage);
+      return true;
+    }
+  }
+  if (spell instanceof DamageSpell && !(target instanceof Spellcaster)) {
+    return false;
+  } else {
+    if (this.spendMana(spell.cost)) {
+      return true;
+    }
+  }
+  return false;
+};
+
+
+
+
+
+//   if (spell === undefined || spell === null) {
+//     return false;
+// }
+//   if (spell instanceof DamageSpell && target instanceof Spellcaster){
+//     if (this.spendMana(spell.cost)) {
+//       target.inflictDamage(spell.damage);
+//     } else {
+//       return false;
+//     }
+
+
+//   } else if (!(spell instanceof Spell) || !(target instanceof Spellcaster)) {
+//       return false;
+//   } else {
+//     return false;
+//   }
+// }
+
+  // console.log("string");
+
+
+
+
+//  10:25
+// if (spell instanceof Spell || spell instanceof DamageSpell){
+//   // if (spell instanceof !DamageSpell) {
+//   //   return false;
+//   if (target instanceof Spellcaster) {
+//       this.spendMana(spell.cost);
+//       this.inflictDamage(target.damage);
+//   } else {
+//   return false;
+//   }
+
+// }
+// }
+
+//     if (target instanceof Spellcaster) {
+//       if (this.mana >= spell.cost){
+//       this.spendMana(spell.cost);
+//       this.inflictDamage(target.damage);
+//       } else {
+//       return false;
+//       }
+//     } else{
+//     return false;
+//     }
+//   } else {
+//   return false;
+//   }
+// } else {
+// return false;
+// }
+// }
+
+
+
+
+//   if (spell instanceof Spell && this.mana >= spell.cost){
+//     this.spendMana(spell.cost);
+//     console.log(this.spendMana(spell.cost), "thisaslkd;fjks");
+//     return this.spendMana;
+//   } else if (spell instanceof Spell && this.mana < spell.cost){
+//     return false;
+//   }
+// }
+
+
+
+ //  if ((spell instanceof Spell) && !(spell instanceof DamageSpell)) {
+
+
+
+ //  }
+
+
+ // } else if ((spell instanceof DamageSpell) && (target instanceof Spellcaster)){
+
+ // }
+//   if (spell instanceof Spell) {  //&& target instanceof Spellcaster) {
+//     if (this.mana >= this.cost) {
+//       this.spendMana;
+//       return true;
+//     } else if (this.mana <= this.cost) {
+//       return false;
+//     } else {
+//       this.mana = false;
+//     }
+// }
+
+//this.spendMana
